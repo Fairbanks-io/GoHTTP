@@ -9,12 +9,12 @@
 ### Getting Started
 To run, add your files to **src/public**, then launch:
 ```
-./make
+go run src/main.go
 ```
 
-To run from source, launch with:
+You can also build the application with:
 ```
-go run src/main.go
+go build src/main.go
 ```
 
 ### Docker
