@@ -27,4 +27,4 @@ docker build -t fairbanks-io/gohttp:latest .
 A health check endpoint is available on `/healthz`
 
 ### Coming Soon
-- [ ] Docker Support
+- [x] Docker Support
