@@ -21,4 +21,4 @@ go run src/main.go
 A health check endpoint is available on `/healthz`
 
 ### Coming Soon
-[ ] Docker Support
+- [ ] Docker Support
