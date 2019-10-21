@@ -9,7 +9,7 @@
 ### Getting Started
 To run, add your files to **src/public**, then launch:
 ```
-./make`
+./make
 ```
 
 To run from source, launch with:
@@ -21,4 +21,4 @@ go run src/main.go
 A health check endpoint is available on `/healthz`
 
 ### Coming Soon
-[] Docker Support
+[ ] Docker Support
