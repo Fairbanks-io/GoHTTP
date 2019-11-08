@@ -10,6 +10,7 @@ import (
 	"os/signal"
 	"sync/atomic"
 	"time"
+	"strings"
 )
 
 type key int
@@ -78,8 +79,29 @@ func main() {
 	logger.Println("GoHTTP stopped")
 }
 
+type neuteredFileSystem struct {
+    fs http.FileSystem
+}
+
+func (nfs neuteredFileSystem) Open(path string) (http.File, error) {
+    f, err := nfs.fs.Open(path)
+    if err != nil {
+        return nil, err
+    }
+
+    s, err := f.Stat()
+    if s.IsDir() {
+        index := strings.TrimSuffix(path, "/") + "/index.html"
+        if _, err := nfs.fs.Open(index); err != nil {
+            return nil, err
+        }
+    }
+
+    return f, nil
+}
+
 func index() http.Handler {
-	return http.FileServer(http.Dir(publicDir))
+	return http.FileServer(neuteredFileSystem{http.Dir(publicDir)})
 }
 
 func healthz() http.Handler {
