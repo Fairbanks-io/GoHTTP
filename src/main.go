@@ -20,14 +20,14 @@ const (
 )
 
 var (
-	listenAddr string
+	port string
 	publicDir  string
 	healthy    int32
 )
 
 func main() {
-	flag.StringVar(&listenAddr, "listen-addr", ":8000", "server listen address")
 	flag.StringVar(&publicDir, "public-dir", "./src/public", "directory to serve files from")
+	flag.StringVar(&port, "port", ":8000", "Port to run on (Defaults to :8000)")
 	flag.Parse()
 
 	logger := log.New(os.Stdout, "http: ", log.LstdFlags)
@@ -42,7 +42,7 @@ func main() {
 	}
 
 	server := &http.Server{
-		Addr:         listenAddr,
+		Addr:         port,
 		Handler:      tracing(nextRequestID)(logging(logger)(router)),
 		ErrorLog:     logger,
 		ReadTimeout:  5 * time.Second,
@@ -69,10 +69,10 @@ func main() {
 		close(done)
 	}()
 
-	logger.Println("GoHTTP is ready to handle requests at", listenAddr)
+	logger.Println("GoHTTP is running on port", port)
 	atomic.StoreInt32(&healthy, 1)
 	if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-		logger.Fatalf("GoHTTP could not listen on %s: %v\n", listenAddr, err)
+		logger.Fatalf("GoHTTP could not listen on port %s: %v\n", port, err)
 	}
 
 	<-done
