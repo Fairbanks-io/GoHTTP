@@ -29,8 +29,7 @@ func main() {
 	dir, err := os.Getwd()
 	if err != nil {
 		log.Fatal(err)
-	}
-	if dir == "/" {
+	} else if dir == "/" {
 		// Do nothing
 	} else {	
 		dir = dir + "/public"
