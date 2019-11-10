@@ -26,12 +26,11 @@ var (
 )
 
 func main() {
-	flag.StringVar(&publicDir, "public-dir", "./src/public", "directory to serve files from")
 	flag.StringVar(&port, "port", ":8000", "Port to run on (Defaults to :8000)")
+	flag.StringVar(&publicDir, "publicdir", "./src/public", "Directory to serve files from (Defaults to ./src/public)")
 	flag.Parse()
 
-	logger := log.New(os.Stdout, "http: ", log.LstdFlags)
-	logger.Println("Serving content from", publicDir)
+	logger := log.New(os.Stdout, "go-http: ", log.LstdFlags)
 
 	router := http.NewServeMux()
 	router.Handle("/", index())
@@ -70,6 +69,7 @@ func main() {
 	}()
 
 	logger.Println("GoHTTP is running on port", port)
+	logger.Println("Serving content from", publicDir)
 	atomic.StoreInt32(&healthy, 1)
 	if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		logger.Fatalf("GoHTTP could not listen on port %s: %v\n", port, err)
