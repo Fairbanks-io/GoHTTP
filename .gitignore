@@ -15,3 +15,4 @@
 # vendor/
 ca-certificates.crt
 public/images/*
+main
