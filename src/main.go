@@ -26,8 +26,18 @@ var (
 )
 
 func main() {
+	dir, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+	if dir == "/" {
+		// Do nothing
+	} else {	
+		dir = dir + "/public"
+	}
+
 	flag.StringVar(&port, "port", ":8000", "Port to run on (Defaults to :8000)")
-	flag.StringVar(&publicDir, "publicdir", "./src/public", "Directory to serve files from (Defaults to ./src/public)")
+	flag.StringVar(&publicDir, "publicdir", dir, "Directory to serve files from (Defaults to current directory + /public)")
 	flag.Parse()
 
 	logger := log.New(os.Stdout, "go-http: ", log.LstdFlags)
