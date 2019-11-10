@@ -1,0 +1,5 @@
+*.md
+.git*
+LICENSE
+*.tmp
+*.bak
