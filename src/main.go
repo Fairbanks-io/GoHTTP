@@ -35,7 +35,7 @@ func main() {
 		dir = dir + "/public"
 	}
 
-	flag.StringVar(&port, "port", ":8000", "Port to run on (Defaults to :8000)")
+	flag.StringVar(&port, "port", ":8080", "Port to run on (Defaults to :8080)")
 	flag.StringVar(&publicDir, "publicdir", dir, "Directory to serve files from (Defaults to current directory + /public)")
 	flag.Parse()
 
